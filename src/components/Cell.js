@@ -1,4 +1,4 @@
-const Cell = ({ id, cell, setCells, turn, setTurn }) => {
+const Cell = ({ id, cell, setCells, turn, setTurn, cells, winningMessage }) => {
   const handleClick = (e) => {
     console.log('hey there click', e);
 
@@ -11,22 +11,40 @@ const Cell = ({ id, cell, setCells, turn, setTurn }) => {
     if (!filled) {
       if (turn === 'circle') {
         e.target.firstChild.classList.add('circle');
+        handleCellChange('circle');
         setTurn('cross');
       }
 
       if (turn === 'cross') {
         e.target.firstChild.classList.add('cross');
+        handleCellChange('cross');
         setTurn('circle');
       }
     }
 
     console.log('filled', filled);
+  };
 
-    // setCells();
+  // set value in array
+  const handleCellChange = (newCellName) => {
+    const newCells = cells.map((cell, index) => {
+      if (index === id) {
+        return newCellName;
+      } else {
+        return cell;
+      }
+    });
+
+    setCells(newCells);
   };
 
   return (
-    <div className="square" id={id} cell={cell} onClick={handleClick}>
+    <div
+      className="square"
+      id={id}
+      cell={cell}
+      onClick={winningMessage ? undefined : handleClick}
+    >
       <div className={cell}></div>
     </div>
   );
