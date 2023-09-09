@@ -1,25 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from 'react';
+import Cell from './components/Cell';
 
-function App() {
+const App = () => {
+  const [cells, setCells] = useState(['', '', '', '', '', '', '', '', '']);
+  const [turn, setTurn] = useState('circle');
+  const [winningMessage, setWinningMessage] = useState(null);
+
+  console.log('cells', cells);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <div className="gameboard">
+        {cells.map((cell, index) => {
+          // todo - what will happen if an index will be the same?
+          return (
+            <Cell
+              key={index}
+              id={index}
+              cell={cell}
+              setCells={setCells}
+              turn={turn}
+              setTurn={setTurn}
+            />
+          );
+        })}
+      </div>
+      {turn && <p>Now it's the turn of the {turn}</p>}
     </div>
   );
-}
+};
 
 export default App;
